@@ -15,7 +15,7 @@ const validateProjectId = (req, res, next) =>
                 if(response)
                 {
                     console.log(response)
-                    req.project_id = response
+                    req.project_id = response.id
                     next()
                 }
                 else res.status(400).json({ errorMessage: "Invalid project id" })
@@ -53,7 +53,7 @@ router.get('/:id', (req, res) =>
             })
 })
 
-router.post('/id', validateProjectId, (req, res) =>
+router.post('/:id', validateProjectId, (req, res) =>
 {
     if(!req.body.notes || !req.body.description)
     {
@@ -61,7 +61,8 @@ router.post('/id', validateProjectId, (req, res) =>
     }
     else
     {
-        actionModel.insert(req.body)
+        console.log("req.body", req.body)
+        actionModel.insert({ ...req.body, project_id: req.project_id } )
             .then(response =>
                 {
                     res.status(201).json(response)
