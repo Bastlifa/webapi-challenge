@@ -81,3 +81,21 @@ export const getProject = id => dispatch =>
                     dispatch({ type: GET_PROJECT_FAIL, payload: err })
                 })
 }
+
+export const getProjectActions = id => dispatch =>
+{
+    dispatch({ type: GET_PROJECT_ACTIONS_START })
+
+    axios
+        .get(`${baseURL}projects/${id}/actions`)
+            .then(res =>
+                {
+                    console.log("res from getProjectActions:", res)
+                    dispatch({ type: GET_PROJECT_ACTIONS_SUCCESS, payload: res.data })
+                })
+            .catch(err =>
+                {
+                    console.log("err from getProjectActions:", err)
+                    dispatch({ type: GET_PROJECT_ACTIONS_FAIL, payload: err })
+                })
+}

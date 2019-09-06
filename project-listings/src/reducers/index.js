@@ -40,7 +40,8 @@ const initialState =
     projects: [],
     actions: [],
     isLoading: false,
-    curProject: null
+    curProject: null,
+    curProjActions: null,
 }
 
 export const reducer = (state = initialState, action) =>
@@ -80,6 +81,26 @@ export const reducer = (state = initialState, action) =>
                 error: "",
             }
         case GET_PROJECT_FAIL:
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload,
+            }
+        case GET_PROJECT_ACTIONS_START:
+            return {
+                ...state,
+                isLoading: true,
+                error: "",
+            }
+        case GET_PROJECT_ACTIONS_SUCCESS:
+            console.log("action payload get proj act", action.payload)
+            return {
+                ...state,
+                isLoading: false,
+                curProjActions: action.payload,
+                error: "",
+            }
+        case GET_PROJECT_ACTIONS_FAIL:
             return {
                 ...state,
                 isLoading: false,
