@@ -1,12 +1,15 @@
 import React, {useEffect, useState} from "react"
 import {useSelector, useDispatch} from "react-redux"
 import {addProject, getProjects} from "../actions"
-import { ProjectListingsDiv, ProjectListingDiv } from './Styles'
+import { ProjectListingsDiv, ProjectListingDivSmall, EditButton } from './Styles'
 import {Link } from 'react-router-dom'
 import AddProjectForm from './AddProjectForm'
 
 const ProjectList = _ =>
 {
+    const [inputs, setInputs] = useState({ name: "", description: "" })
+    let [isEditing, setIsEditing] = useState(false)
+    const [projID, setProjID] = useState()
     const dispatch = useDispatch()
     const state = useSelector(state => state)
     const [compProjects, setCompProjects] = useState([])
@@ -20,21 +23,37 @@ const ProjectList = _ =>
             console.log(state.projects)
         }, [state.projects])
         
-        console.log(compProjects)
+    const handleEdit = project =>
+    {
+        inputs.name = project.name
+        inputs.description = project.description
+        setIsEditing(true)
+        setProjID(project.id)
+    }
+
     return (
         <>
             <ProjectListingsDiv>
                 {compProjects.map(project => 
                     {
                         return(
-                        <Link to={`/projects/${project.id}`} key={project.id}>
-                            <ProjectListingDiv><h3>{project.name}</h3></ProjectListingDiv>
-                        </Link>
+                        
+                            <ProjectListingDivSmall key={project.id}>
+                                <div style={{width: '800px'}}>
+                                    <h3>
+                                        <Link to={`/projects/${project.id}`} >
+                                            {project.name}
+                                        </Link>
+                                    </h3>
+
+                                </div>
+                                <EditButton onClick={_ => handleEdit(project)}>Edit</EditButton>
+                            </ProjectListingDivSmall>
                         )
                     }
                 )}
             </ProjectListingsDiv>
-            <AddProjectForm />
+            <AddProjectForm inputs={inputs} setInputs={setInputs} isEditing={isEditing} projID={projID}/>
         </>
     )
 }

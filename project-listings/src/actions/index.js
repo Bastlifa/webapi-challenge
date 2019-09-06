@@ -117,3 +117,21 @@ export const postProject = inputs => dispatch =>
                     dispatch({ type: POST_PROJECT_FAIL, payload: err })
                 })
 }
+
+export const putProject = (inputs, id) => dispatch =>
+{
+    dispatch({ type: PUT_PROJECT_START })
+
+    axios
+        .put(`${baseURL}projects/${id}`, inputs)
+            .then(res =>
+                {
+                    console.log("res from putProject:", res)
+                    dispatch({ type: PUT_PROJECT_SUCCESS, payload: res.data })
+                })
+            .catch(err =>
+                {
+                    console.log("err from putProject:", err)
+                    dispatch({ type: PUT_PROJECT_FAIL, payload: err })
+                })
+}

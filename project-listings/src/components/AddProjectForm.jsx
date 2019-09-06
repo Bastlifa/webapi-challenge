@@ -1,11 +1,11 @@
 import React, {useState} from "react"
-import { postProject } from '../actions'
+import { postProject, putProject } from '../actions'
 import { useDispatch } from 'react-redux'
 
-const AddProjectForm = () =>
+const AddProjectForm = (props) =>
 {
     const dispatch = useDispatch()
-    const [inputs, setInputs] = useState({ name: "", description: "" })
+    const {inputs, setInputs, isEditing, projID} = props
     const handleChange = event =>
     {
         setInputs({ ...inputs, [event.target.name]: event.target.value })
@@ -13,7 +13,8 @@ const AddProjectForm = () =>
     const handleSubmit = event =>
     {
         // event.preventDefault()
-        dispatch(postProject(inputs))
+        if(!isEditing) dispatch(postProject(inputs))
+        else dispatch(putProject(inputs, projID))
     }
     return (
         <div>
