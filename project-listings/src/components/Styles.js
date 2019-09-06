@@ -8,5 +8,10 @@ export const ProjectListingsDiv = styled.div`
 
 export const ProjectListingDiv = styled.div`
     display: flex;
-    
+    flex-flow: column nowrap;
+    border: 3px solid black;
+    background-color: lightgray;
+    border-radius: 6px;
+    margin: 20px auto;
+    width: 80%;
 `;

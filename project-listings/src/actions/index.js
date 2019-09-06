@@ -69,7 +69,7 @@ export const getProject = id => dispatch =>
     dispatch({ type: GET_PROJECT_START })
 
     axios
-        .get(`${baseURL}/projects/${id}`)
+        .get(`${baseURL}projects/${id}`)
             .then(res =>
                 {
                     console.log("res from getProject:", res)
