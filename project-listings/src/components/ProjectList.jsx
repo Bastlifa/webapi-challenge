@@ -3,6 +3,7 @@ import {useSelector, useDispatch} from "react-redux"
 import {addProject, getProjects} from "../actions"
 import { ProjectListingsDiv, ProjectListingDiv } from './Styles'
 import {Link } from 'react-router-dom'
+import AddProjectForm from './AddProjectForm'
 
 const ProjectList = _ =>
 {
@@ -33,6 +34,7 @@ const ProjectList = _ =>
                     }
                 )}
             </ProjectListingsDiv>
+            <AddProjectForm />
         </>
     )
 }

@@ -33,13 +33,14 @@ const Project = props =>
                 {curProjActions && curProjActions.map(action =>
                 {
                     return(
-                        <div style={{display: 'flex', flexFlow: 'column nowrap'}}>
+                        <div key={action.id} style={{display: 'flex', flexFlow: 'column nowrap'}}>
                             <h3>{action.description}</h3>
                             <p>{action.notes}</p>
                         </div>
                     )
                 })}
             </ProjectListingDiv>}
+            
         </>
     )
 }

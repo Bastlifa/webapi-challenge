@@ -99,3 +99,21 @@ export const getProjectActions = id => dispatch =>
                     dispatch({ type: GET_PROJECT_ACTIONS_FAIL, payload: err })
                 })
 }
+
+export const postProject = inputs => dispatch =>
+{
+    dispatch({ type: POST_PROJECT_START })
+
+    axios
+        .post(`${baseURL}projects`, inputs)
+            .then(res =>
+                {
+                    console.log("res from postProject:", res)
+                    dispatch({ type: POST_PROJECT_SUCCESS, payload: res })
+                })
+            .catch(err =>
+                {
+                    console.log("err from postProject:", err)
+                    dispatch({ type: POST_PROJECT_FAIL, payload: err })
+                })
+}
