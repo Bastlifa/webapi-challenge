@@ -1,8 +1,11 @@
 const express = require('express')
 const projectModel = require('../data/helpers/projectModel')
+const cors = require('cors')
 
 const router = express.Router()
+
 router.use(express.json())
+router.use(cors())
 
 router.get('/', (req, res) =>
 {

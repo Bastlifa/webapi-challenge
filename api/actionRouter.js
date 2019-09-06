@@ -1,9 +1,12 @@
 const express = require('express')
 const actionModel = require('../data/helpers/actionModel')
 const projectModel = require('../data/helpers/projectModel')
+const cors = require('cors')
 
 const router = express.Router()
+
 router.use(express.json())
+router.use(cors())
 
 const validateProjectId = (req, res, next) =>
 {
