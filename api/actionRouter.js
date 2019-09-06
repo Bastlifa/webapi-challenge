@@ -14,7 +14,8 @@ const validateProjectId = (req, res, next) =>
             {
                 if(response)
                 {
-                    req.project = response
+                    console.log(response)
+                    req.project_id = response
                     next()
                 }
                 else res.status(400).json({ errorMessage: "Invalid project id" })
@@ -52,11 +53,11 @@ router.get('/:id', (req, res) =>
             })
 })
 
-router.post('/', (req, res) =>
+router.post('/id', validateProjectId, (req, res) =>
 {
-    if(!req.body.name || !req.body.description)
+    if(!req.body.notes || !req.body.description)
     {
-        res.status(400).json({ errorMessage: "Please provide name and description for action" })
+        res.status(400).json({ errorMessage: "Please provide notes and description for action" })
     }
     else
     {

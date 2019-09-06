@@ -31,6 +31,20 @@ router.get('/:id', (req, res) =>
             })
 })
 
+router.get('/:id/actions', (req, res) =>
+{
+    projectModel.getProjectActions(req.params.id)
+        .then(response =>
+            {
+                if(response) res.status(200).json(response)
+                else res.status(404).json({ errorMessage: "No project with that ID" })
+            })
+        .catch(error =>
+            {
+                res.status(500).json({ errorMessage: "There was an error retrieving that project's actions" })
+            })
+})
+
 router.post('/', (req, res) =>
 {
     if(!req.body.name || !req.body.description)
