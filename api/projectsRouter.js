@@ -30,3 +30,26 @@ router.get('/:id', (req, res) =>
                 res.status(500).json({ errorMessage: "There was an error retrieving that project" })
             })
 })
+
+router.post('/', (req, res) =>
+{
+    if(!req.body.name || !req.body.description)
+    {
+        res.status(400).json({ errorMessage: "Please provide name and description for project" })
+    }
+    else
+    {
+        projectModel.insert(req.body)
+            .then(response =>
+                {
+                    res.status(201).json(response)
+                })
+            .catch(error =>
+                {
+                    res.status(500).json({ errorMessage: `There was an error inserting new project` })
+                })
+    }
+})
+
+
+module.exports = router
