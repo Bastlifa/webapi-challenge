@@ -19,7 +19,7 @@ router.get('/', (req, res) =>
 
 router.get('/:id', (req, res) =>
 {
-    projectModel.get(req.params.id)
+    projectModel.get(Number(req.params.id))
         .then(response =>
             {
                 if(response) res.status(200).json(response)
@@ -33,7 +33,7 @@ router.get('/:id', (req, res) =>
 
 router.get('/:id/actions', (req, res) =>
 {
-    projectModel.getProjectActions(req.params.id)
+    projectModel.getProjectActions(Number(req.params.id))
         .then(response =>
             {
                 if(response) res.status(200).json(response)
@@ -67,14 +67,14 @@ router.post('/', (req, res) =>
 
 router.put('/:id', (req, res) =>
 {
-    if(!req.body.name && req.body.description)
+    if(!req.body.name && !req.body.description)
     {
         res.status(400).json({ errorMessage: "Please provide name or description or both" })
     }
     else if(!req.params.id) res.status(400).json({ errorMessage: "Please provide id in url" })
     else
     {
-        projectModel.update(req.params.id, req.body)
+        projectModel.update(Number(req.params.id), req.body)
             .then(response =>
                 {
                     if(response) res.status(200).json(response)
@@ -89,7 +89,7 @@ router.put('/:id', (req, res) =>
 
 router.delete('/:id', (req, res) =>
 {
-    const id = req.params.id
+    const id = Number(req.params.id)
     projectModel.remove(id)
         .then(response =>
             {

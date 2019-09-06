@@ -8,7 +8,7 @@ router.use(express.json())
 const validateProjectId = (req, res, next) =>
 {
     if(!req.params.id) res.status(400).json({ errorMessage: `Missing Project ID` })
-    const id = req.params.id
+    const id = Number(req.params.id)
     projectModel.get(id)
         .then(response =>
             {
@@ -41,7 +41,7 @@ router.get('/', (req, res) =>
 
 router.get('/:id', (req, res) =>
 {
-    actionModel.get(req.params.id)
+    actionModel.get(Number(req.params.id))
         .then(response =>
             {
                 if(response) res.status(200).json(response)
@@ -53,7 +53,7 @@ router.get('/:id', (req, res) =>
             })
 })
 
-router.post('/:id', validateProjectId, (req, res) =>
+router.post('/project/:id', validateProjectId, (req, res) =>
 {
     if(!req.body.notes || !req.body.description)
     {
@@ -76,14 +76,14 @@ router.post('/:id', validateProjectId, (req, res) =>
 
 router.put('/:id', (req, res) =>
 {
-    if(!req.body.name && req.body.description)
+    if(!req.body.notes && !req.body.description)
     {
-        res.status(400).json({ errorMessage: "Please provide name or description or both" })
+        res.status(400).json({ errorMessage: "Please provide notes or description or both" })
     }
     else if(!req.params.id) res.status(400).json({ errorMessage: "Please provide id in url" })
     else
     {
-        actionModel.update(req.params.id, req.body)
+        actionModel.update(Number(req.params.id), req.body)
             .then(response =>
                 {
                     if(response) res.status(200).json(response)
@@ -98,7 +98,7 @@ router.put('/:id', (req, res) =>
 
 router.delete('/:id', (req, res) =>
 {
-    const id = req.params.id
+    const id = Number(req.params.id)
     actionModel.remove(id)
         .then(response =>
             {
